@@ -1,0 +1,103 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+#fileInput {
+    display: none; /* 隱藏預設的檔案輸入框 */
+}
+
+#playButton {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#playButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#playButton:hover:enabled {
+    background-color: #1e7e34;
+}
+
+.playlist {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.playlist h2 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#fileList {
+    list-style: none;
+    padding: 0;
+}
+
+#fileList li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#fileList li:last-child {
+    border-bottom: none;
+}
+
+.player-container {
+    width: 100%;
+}
+
+#mediaPlayer {
+    width: 100%;
+    max-height: 400px; /* 可以設定最大高度 */
+    background-color: #000; /* 預設背景色 */
+}
