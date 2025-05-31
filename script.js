@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playButton = document.getElementById('playButton');
     const fileList = document.getElementById('fileList');
     const mediaPlayer = document.getElementById('mediaPlayer');
-    const nowPlaying = document.getElementById('nowPlaying');
+    const nowPlaying = document.getElementById('nowPlaying'); // 確保這行有抓到
 
     let files = [];
     let currentFileIndex = 0;
@@ -49,6 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaPlayer.src = fileURL;
         mediaPlayer.load();
         mediaPlayer.play();
-        nowPlaying.textContent = `播放中：${currentFile.name}`;
+        nowPlaying.textContent = `播放中：${currentFile.name}`; // 這裡會顯示名稱
     }
 });
