@@ -101,3 +101,8 @@ h1 {
     max-height: 400px; /* 可以設定最大高度 */
     background-color: #000; /* 預設背景色 */
 }
+.now-playing {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #007bff;
+}
