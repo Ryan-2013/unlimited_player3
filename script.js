@@ -10,11 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.addEventListener('change', (event) => {
         files = Array.from(event.target.files);
         updateFileList();
-        if (files.length > 0) {
-            playButton.disabled = false;
-        } else {
-            playButton.disabled = true;
-        }
+        playButton.disabled = files.length === 0;
     });
 
     playButton.addEventListener('click', () => {
@@ -36,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         files.forEach((file, index) => {
             const listItem = document.createElement('li');
             listItem.textContent = file.name;
+            listItem.style.cursor = 'pointer';
+            listItem.addEventListener('click', () => {
+                currentFileIndex = index;
+                playCurrentFile();
+            });
             fileList.appendChild(listItem);
         });
     }
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentFile = files[currentFileIndex];
         const fileURL = URL.createObjectURL(currentFile);
         mediaPlayer.src = fileURL;
-        mediaPlayer.load(); // 重新載入以應用新的來源
+        mediaPlayer.load();
         mediaPlayer.play();
     }
 });
