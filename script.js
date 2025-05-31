@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playButton = document.getElementById('playButton');
     const fileList = document.getElementById('fileList');
     const mediaPlayer = document.getElementById('mediaPlayer');
+    const nowPlaying = document.getElementById('nowPlaying');
 
     let files = [];
     let currentFileIndex = 0;
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         files = Array.from(event.target.files);
         updateFileList();
         playButton.disabled = files.length === 0;
+        nowPlaying.textContent = '目前無播放內容';
     });
 
     playButton.addEventListener('click', () => {
@@ -47,5 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaPlayer.src = fileURL;
         mediaPlayer.load();
         mediaPlayer.play();
+        nowPlaying.textContent = `播放中：${currentFile.name}`;
     }
 });
