@@ -3,52 +3,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const playButton = document.getElementById('playButton');
     const fileList = document.getElementById('fileList');
     const mediaPlayer = document.getElementById('mediaPlayer');
-    const nowPlaying = document.getElementById('nowPlaying'); // 確保這行有抓到
+    const nowPlaying = document.getElementById('nowPlaying');
 
     let files = [];
     let currentFileIndex = 0;
 
-    fileInput.addEventListener('change', (event) => {
+    function initEvents() {
+        fileInput.addEventListener('change', handleFileSelect);
+        playButton.addEventListener('click', startPlayback);
+        mediaPlayer.addEventListener('ended', playNextFile);
+        mediaPlayer.addEventListener('loadedmetadata', updateNowPlaying); // 每次載入新媒體時更新名稱
+    }
+
+    function handleFileSelect(event) {
         files = Array.from(event.target.files);
+        currentFileIndex = 0;
         updateFileList();
+        togglePlayButton();
+        updateNowPlaying(); // 初始更新一次
+    }
+
+    function togglePlayButton() {
         playButton.disabled = files.length === 0;
-        nowPlaying.textContent = '目前無播放內容';
-    });
+    }
 
-    playButton.addEventListener('click', () => {
-        if (files.length > 0) {
-            currentFileIndex = 0;
-            playCurrentFile();
-        }
-    });
+    function startPlayback() {
+        if (files.length === 0) return;
+        playFile(currentFileIndex);
+    }
 
-    mediaPlayer.addEventListener('ended', () => {
-        if (files.length > 0) {
-            currentFileIndex = (currentFileIndex + 1) % files.length;
-            playCurrentFile();
-        }
-    });
+    function playNextFile() {
+        if (files.length === 0) return;
+        currentFileIndex = (currentFileIndex + 1) % files.length;
+        playFile(currentFileIndex);
+    }
+
+    function playFile(index) {
+        const file = files[index];
+        const fileURL = URL.createObjectURL(file);
+        mediaPlayer.src = fileURL;
+        mediaPlayer.play();
+    }
 
     function updateFileList() {
         fileList.innerHTML = '';
         files.forEach((file, index) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = file.name;
-            listItem.style.cursor = 'pointer';
-            listItem.addEventListener('click', () => {
+            const li = document.createElement('li');
+            li.textContent = file.name;
+            li.style.cursor = 'pointer';
+            li.addEventListener('click', () => {
                 currentFileIndex = index;
-                playCurrentFile();
+                playFile(currentFileIndex);
             });
-            fileList.appendChild(listItem);
+            fileList.appendChild(li);
         });
     }
 
-    function playCurrentFile() {
-        const currentFile = files[currentFileIndex];
-        const fileURL = URL.createObjectURL(currentFile);
-        mediaPlayer.src = fileURL;
-        mediaPlayer.load();
-        mediaPlayer.play();
-        nowPlaying.textContent = `播放中：${currentFile.name}`; // 這裡會顯示名稱
+    function updateNowPlaying() {
+        if (files.length === 0) {
+            nowPlaying.textContent = '目前無播放內容';
+        } else {
+            const file = files[currentFileIndex];
+            nowPlaying.textContent = `播放中：${file.name}`;
+        }
     }
+
+    initEvents();
 });
